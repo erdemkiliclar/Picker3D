@@ -6,16 +6,14 @@ using TMPro;
 public class CollectorScript : MonoBehaviour
 {
     [SerializeField] TextMeshPro _objectText;
-
+    [SerializeField] GameObject _player, _stopper;
+    [SerializeField] Animator _collectorPlane,_gate;
     int _objectCount = 10;
     int _collectedObject = 0;
-    public int _goOrStay = 0;
-
     private void Start()
     {
         _objectCount = Random.Range(10, 20);
-        _objectText.text = ( "0" + "/" + _objectCount);
-            
+        _objectText.text = ( "0" + "/" + _objectCount);   
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -25,18 +23,27 @@ public class CollectorScript : MonoBehaviour
             _objectText.text = (_collectedObject + "/" + _objectCount);
         }
     }
-
     private void Update()
+    {
+        GoOrStay(); 
+    }
+    void GoOrStay()
     {
         if (_collectedObject >= _objectCount)
         {
-            _goOrStay = 1;
+            StartCoroutine(Cont());
         }
-
-        else 
-        {
-            _goOrStay = 0;
-        }
-        
+    }
+    IEnumerator Cont()
+    {
+        yield return new WaitForSeconds(3);
+        _collectorPlane.Play("CollectorPlane");
+        _gate.Play("Gate");
+        _player.GetComponent<PlayerMove>()._playerSpeed = 1;
+        _stopper.GetComponent<BoxCollider>().enabled = false;
+        _collectedObject = 0;
+        yield return new WaitForSeconds(3);
+        _stopper.GetComponent<BoxCollider>().enabled = true;
+        //Destroy(_stopper.gameObject);
     }
 }
