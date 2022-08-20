@@ -10,15 +10,20 @@ public class CollectorScript : MonoBehaviour
     [SerializeField] GameObject _player, _stopper,_restartPanel;
     [SerializeField] Animator _collectorPlane,_gate;
 
-    public float _estTime = 0;
-    public bool _timerIsRunning = false;
+    float _estTime = 0;
+    bool _timerIsRunning = false;
 
-    int _objectCount = 10;
+    [SerializeField] int _objectCount = 10;
+
+    bool _isRandomActive = false;
     int _collectedObject = 0;
 
     private void Start()
     {
-        _objectCount = Random.Range(10, 20);
+        if (_isRandomActive)
+        {
+            _objectCount = Random.Range(10, 20);
+        }
         _objectText.text = ( "0" + "/" + _objectCount);   
     }
 
@@ -62,14 +67,16 @@ public class CollectorScript : MonoBehaviour
         yield return new WaitForSeconds(3);
         _collectorPlane.Play("CollectorPlane");
         _gate.Play("Gate");
-        _player.GetComponent<PlayerMove>()._playerSpeed = 1.2f;
+        _player.GetComponent<PlayerMove>()._playerSpeed = 1.6f;
         _stopper.GetComponent<BoxCollider>().enabled = false;
         _collectedObject = 0;
         _estTime = 0;
         _timerIsRunning = false;
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         _stopper.GetComponent<BoxCollider>().enabled = true;
+        
+        Destroy(this.gameObject);
         
     }
 

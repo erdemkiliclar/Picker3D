@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] Rigidbody _player;
-    public float _playerSpeed = 1f;
-    [SerializeField] float _playerHorizontalSpeed = 1f;
+    public float _playerSpeed = 1.6f;
+    [SerializeField] float _playerHorizontalSpeed = 1.6f;
     float _horizontalInput;
     private void FixedUpdate()
     {

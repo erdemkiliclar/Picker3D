@@ -5,24 +5,13 @@ using UnityEngine;
 public class PlayerBooster : MonoBehaviour
 {
     [SerializeField] GameObject _player;
-    [SerializeField] float _speed = 0.00001f;
+    [SerializeField] float _speed = 250;
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") && _player.GetComponent<PlayerMove>()._playerSpeed == 0)
+        if (collision.gameObject.CompareTag("Object") && _player.GetComponent<PlayerMove>()._playerSpeed == 0)
         {
-            Debug.Log("Çalıştı");
-            //gameObject.GetComponent<Rigidbody>().AddForce(this.transform.forward*Time.deltaTime*_speed); 
-
-            
-            
-        }
+            collision.gameObject.GetComponent<Rigidbody>().mass = 0.5f;
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * Time.deltaTime * _speed);
+        }  
     }
-
-
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if (hit.gameObject.GetComponent<Rigidbody>() != null)
-    //        hit.gameObject.GetComponent<Rigidbody>().AddForce(collision.transform.forward);
-    //}
-
 }
