@@ -6,8 +6,14 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] Rigidbody _player;
     public float _playerSpeed = 1.6f;
-    [SerializeField] float _playerHorizontalSpeed = 1.6f;
+    [SerializeField] float _playerHorizontalSpeed = 1;
     float _horizontalInput;
+    [SerializeField] Joystick _joystick;
+
+    [SerializeField] AudioSource _objectFX;
+    [SerializeField] bool _isAudioOn;
+    [SerializeField] GameObject _sourceOn, _sourceOff;
+
     private void FixedUpdate()
     {
         PlayerMovement();
@@ -24,6 +30,28 @@ public class PlayerMove : MonoBehaviour
     }
     public void PlayerHorizontalMovement()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
+        
+        _horizontalInput = _joystick.Horizontal;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Object") && _isAudioOn==true)
+        {
+            _objectFX.Play();
+        }
+    }
+
+    public void SoundOn()
+    {
+        _sourceOn.SetActive(false);
+        _sourceOff.SetActive(true);
+        _isAudioOn = true;
+    }
+    public void SoundOff()
+    {
+        _sourceOn.SetActive(true);
+        _sourceOff.SetActive(false);
+        _isAudioOn = false;
     }
 }

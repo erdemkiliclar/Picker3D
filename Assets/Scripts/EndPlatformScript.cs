@@ -19,6 +19,9 @@ public class EndPlatformScript : MonoBehaviour
             _player.GetComponent<Transform>().position = new Vector3(_player.transform.position.x, -0.075f,_player.transform.position.z);
             _player.GetComponent<Transform>().rotation = new Quaternion(0,0,0,0);
 
+
+            
+
             StartCoroutine(DestroyPlatform());
         }
     }

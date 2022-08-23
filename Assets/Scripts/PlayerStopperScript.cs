@@ -14,7 +14,6 @@ public class PlayerStopperScript : MonoBehaviour
             StartCoroutine(DestroyPlatform());
         }
     }    
-
     IEnumerator DestroyPlatform()
     {
         yield return new WaitForSeconds(8);
