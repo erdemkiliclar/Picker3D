@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class NextLevelStopper : MonoBehaviour
 {
-    [SerializeField] GameObject _nextLevelPanel;
-    [SerializeField] GameObject _joystick;
+    [SerializeField] GameObject _player;
+    GameObject _panel;
+    
+    private void Start()
+    {
+        _player = GameObject.Find("Player");
+        _panel = GameObject.Find("Panel");
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Time.timeScale = 0;
-            _joystick.SetActive(false);
-            _nextLevelPanel.SetActive(true);
-            Destroy(this.gameObject);
+            _player.GetComponent<PlayerMove>()._playerSpeed = 0;
+            _panel.transform.GetChild(0).gameObject.SetActive(true);
         }
-    }
+    }  
 }

@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class PlayerStopperScript : MonoBehaviour
 {
-    [SerializeField] GameObject _player;
+    GameObject _player;
     [SerializeField] GameObject _gamePlatform;
-    private void OnTriggerStay(Collider collision)
+
+
+    private void Start()
     {
+        _player = GameObject.Find("Player");
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        
         if (collision.gameObject.CompareTag("Player"))
         {
             _player.GetComponent<PlayerMove>()._playerSpeed = 0;

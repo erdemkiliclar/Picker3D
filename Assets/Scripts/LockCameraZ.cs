@@ -6,9 +6,10 @@ using Cinemachine;
 /// </summary>
 [ExecuteInEditMode]
 [SaveDuringPlay]
-[AddComponentMenu("")] // Hide in menu
+[AddComponentMenu("")] 
 public class LockCameraZ : CinemachineExtension
 {
+    
     [Tooltip("Lock the camera's X position to this value")]
     public float m_ZPosition = 0;
 
@@ -16,11 +17,13 @@ public class LockCameraZ : CinemachineExtension
         CinemachineVirtualCameraBase vcam,
         CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
     {
+        
         if (stage == CinemachineCore.Stage.Body)
         {
             var pos = state.RawPosition;
             pos.x = m_ZPosition;
             state.RawPosition = pos;
+            
         }
     }
 }

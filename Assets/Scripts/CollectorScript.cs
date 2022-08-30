@@ -7,25 +7,26 @@ using TMPro;
 public class CollectorScript : MonoBehaviour
 {
     [SerializeField] TextMeshPro _objectText;
-    [SerializeField] GameObject _player, _stopper,_restartPanel,_joystick;
+    [SerializeField] GameObject _player, _stopper;
     [SerializeField] Animator _collectorPlane,_gate;
-
+    [SerializeField] int _objectCount = 10;
+    [SerializeField] bool _isRandomActive = false;
     float _estTime = 0;
     bool _timerIsRunning = false;
-
-    [SerializeField] int _objectCount = 10;
-
-    [SerializeField] bool _isRandomActive = false;
     int _collectedObject = 0;
+
+
+
     private void Start()
     {
         if (_isRandomActive)
         {
             _objectCount = Random.Range(10, 50);
         }
-        _objectText.text = ( "0" + "/" + _objectCount);   
+        _objectText.text = ( "0" + "/" + _objectCount);
+        _player = GameObject.Find("Player");
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Object"))
@@ -59,7 +60,6 @@ public class CollectorScript : MonoBehaviour
         }
     }
 
-    
     IEnumerator Cont()
     {
         yield return new WaitForSeconds(3);
@@ -80,8 +80,6 @@ public class CollectorScript : MonoBehaviour
     IEnumerator Stop()
     {
         yield return new WaitForSeconds(1);
-        _joystick.SetActive(false);
-        _restartPanel.SetActive(true);
         Time.timeScale = 0;
     }
 }
